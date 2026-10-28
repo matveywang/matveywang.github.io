@@ -1,0 +1,9 @@
+---
+import type { ResourceLinks } from '../data/content';
+interface Props { links: ResourceLinks }
+const { links } = Astro.props;
+const labels = { paper: 'Paper', code: 'Code', project: 'Project' };
+---
+<div class="resource-links">
+  {Object.entries(links).filter(([, url]) => url).map(([key, url]) => <a href={url}>{labels[key as keyof typeof labels]} <span aria-hidden="true">↗</span></a>)}
+</div>

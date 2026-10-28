@@ -1,0 +1,10 @@
+---
+import Layout from '../layouts/Layout.astro';
+import UpdateList from '../components/UpdateList.astro';
+import { sortedUpdates } from '../data/content';
+---
+<Layout title="Updates">
+  <header class="page-heading"><p class="eyebrow">Along the way</p><h1>Updates</h1><p>Announcements, milestones, and notes from my work.</p></header>
+  <UpdateList items={sortedUpdates} />
+  {sortedUpdates.length === 0 && <p>No updates listed yet.</p>}
+</Layout>

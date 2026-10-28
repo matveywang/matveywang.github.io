@@ -1,0 +1,12 @@
+---
+import type { Update } from '../data/content';
+interface Props { items: Update[] }
+const { items } = Astro.props;
+const formatDate = (date: string) => new Intl.DateTimeFormat('en', { month: 'short', day: '2-digit', year: 'numeric', timeZone: 'UTC' }).format(new Date(date + 'T00:00:00Z'));
+---
+<ol class="updates">
+  {items.map(item => <li>
+    <time datetime={item.date}>{formatDate(item.date)}</time>
+    <div><p>{item.url ? <a href={item.url}>{item.text}</a> : item.text}</p>{item.placeholder && <span class="placeholder">Placeholder · example date and announcement</span>}</div>
+  </li>)}
+</ol>

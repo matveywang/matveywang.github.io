@@ -1,0 +1,8 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { profile } from '../data/profile';
+---
+<Layout title="CV">
+  <header class="page-heading"><p class="eyebrow">Academic background</p><h1>Curriculum vitae</h1><p>Education, research experience, and academic work.</p></header>
+  <section class="cv-panel"><span class="document-icon" aria-hidden="true">CV</span><div><h2>{profile.name}</h2>{profile.cv.url ? <><p>Download my curriculum vitae as a PDF.{profile.cv.updated && ` Last updated: ${profile.cv.updated}.`}</p><a class="button" href={profile.cv.url} download>Download CV (PDF) <span aria-hidden="true">↓</span></a></> : <><p>My curriculum vitae will be available here soon.</p><span class="placeholder">PDF to be added</span></>}</div></section>
+</Layout>

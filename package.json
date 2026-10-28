@@ -1,0 +1,16 @@
+{
+  "name": "matveywang-academic-homepage",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=24.0.0" },
+  "scripts": {
+    "dev": "astro dev",
+    "check": "astro check",
+    "build": "astro build",
+    "preview": "astro preview",
+    "verify": "npm run check && npm run build && node scripts/verify-build.mjs"
+  },
+  "dependencies": { "astro": "7.4.2" },
+  "devDependencies": { "@astrojs/check": "0.9.12", "typescript": "5.9.3" }
+}

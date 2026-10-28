@@ -1,0 +1,19 @@
+---
+import type { Publication } from '../data/content';
+import ResourceLinks from './ResourceLinks.astro';
+interface Props { items: Publication[] }
+const { items } = Astro.props;
+---
+<div class="publication-list">
+  {items.map(item => <article class:list={['publication', { 'no-thumbnail': !item.thumbnail }]} id={item.id}>
+    {item.thumbnail && <img src={item.thumbnail} alt={item.thumbnailAlt ?? `Figure for ${item.title}`} width="640" height="400" loading="lazy" />}
+    <div>
+      <p class="eyebrow">{item.venue} <span aria-hidden="true">·</span> {item.year}</p>
+      <h3>{item.title}</h3>
+      <p class="authors">{item.authors.join(', ')}</p>
+      <p>{item.summary}</p>
+      {item.placeholder && <span class="placeholder">Placeholder · not a real publication</span>}
+      <ResourceLinks links={item.links} />
+    </div>
+  </article>)}
+</div>

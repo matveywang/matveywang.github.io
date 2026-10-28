@@ -1,0 +1,9 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { profile } from '../data/profile';
+---
+<Layout title="Research">
+  <header class="page-heading"><p class="eyebrow">Questions & approaches</p><h1>Research</h1><p>Research directions, ideas, and open questions.</p></header>
+  {profile.research.map((item, index) => <section class="research-row"><span class="research-number">{String(index + 1).padStart(2, '0')}</span><div><h2>{item.title}</h2><p>{item.description}</p><div class="tags">{item.tags.map(tag => <span>{tag}</span>)}</div>{item.placeholder && <span class="placeholder">Placeholder · research details to be added</span>}</div></section>)}
+  <div class="endnote"><p>Follow the work</p><a href="/publications/">Publications →</a><a href="/projects/">Projects →</a></div>
+</Layout>

@@ -1,0 +1,59 @@
+---
+import { profile } from '../data/profile';
+import '../styles/global.css';
+interface Props { title: string; description?: string }
+const { title, description = profile.description } = Astro.props;
+const navigation = [['Home', '/'], ['About', '/about/'], ['Research', '/research/'], ['Publications', '/publications/'], ['Projects', '/projects/'], ['Updates', '/updates/'], ['CV', '/cv/']];
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+<!doctype html>
+<html lang={profile.locale}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title === 'Home' ? `${profile.name} — Academic homepage` : `${title} — ${profile.name}`}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content={profile.name} />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={`${title} — ${profile.name}`} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content={profile.name} />
+    <meta name="twitter:card" content="summary" />
+    <script is:inline>
+      try { const saved = localStorage.getItem('theme'); if (saved === 'light' || saved === 'dark') document.documentElement.dataset.theme = saved; } catch {}
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="wordmark" href="/">{profile.name}<span aria-hidden="true">.</span></a>
+        <nav aria-label="Main navigation">{navigation.map(([label, href]) => <a href={href} aria-current={Astro.url.pathname === href ? 'page' : undefined}>{label}</a>)}</nav>
+        <button id="theme-toggle" type="button" aria-label="Switch to dark theme" title="Change color theme" hidden><span aria-hidden="true">◐</span></button>
+      </div>
+    </header>
+    <main id="main" tabindex="-1"><slot /></main>
+    <footer class="site-footer"><p>© {new Date().getUTCFullYear()} {profile.name}</p><p>Research, ideas, and work in progress.</p><a href="https://github.com/matveywang/matveywang.github.io">Website source <span aria-hidden="true">↗</span></a></footer>
+    <script>
+      const button = document.querySelector<HTMLButtonElement>('#theme-toggle');
+      const media = window.matchMedia('(prefers-color-scheme: dark)');
+      const isDark = () => document.documentElement.dataset.theme ? document.documentElement.dataset.theme === 'dark' : media.matches;
+      const syncLabel = () => button?.setAttribute('aria-label', `Switch to ${isDark() ? 'light' : 'dark'} theme`);
+      if (button) {
+        button.hidden = false;
+        syncLabel();
+        media.addEventListener('change', syncLabel);
+        button.addEventListener('click', () => {
+          const theme = isDark() ? 'light' : 'dark';
+          document.documentElement.dataset.theme = theme;
+          try { localStorage.setItem('theme', theme); } catch {}
+          syncLabel();
+        });
+      }
+    </script>
+  </body>
+</html>

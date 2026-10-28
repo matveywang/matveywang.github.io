@@ -1,0 +1,13 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ResourceLinks from '../components/ResourceLinks.astro';
+import { projects } from '../data/content';
+---
+<Layout title="Projects">
+  <header class="page-heading"><p class="eyebrow">Ideas into practice</p><h1>Projects</h1><p>Research explorations and engineering work.</p></header>
+  <div class="project-grid">{projects.map(item => <article class="project" id={item.id}>
+    {item.thumbnail && <img src={item.thumbnail} alt={item.thumbnailAlt ?? `Image for ${item.title}`} width="640" height="400" loading="lazy" />}
+    <div class="project-body"><p class="eyebrow">{item.category}</p><h2>{item.title}</h2><p>{item.description}</p><div class="tags">{item.tags.map(tag => <span>{tag}</span>)}</div>{item.placeholder && <span class="placeholder">Placeholder · not a real project</span>}<ResourceLinks links={item.links} /></div>
+  </article>)}</div>
+  {projects.length === 0 && <p>No projects listed yet.</p>}
+</Layout>

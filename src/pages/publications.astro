@@ -1,0 +1,11 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PublicationList from '../components/PublicationList.astro';
+import { sortedPublications } from '../data/content';
+const years = [...new Set(sortedPublications.map(item => item.year))];
+---
+<Layout title="Publications" description="Publications, papers, code, and project resources.">
+  <header class="page-heading"><p class="eyebrow">Research output</p><h1>Publications</h1><p>Papers and their accompanying resources.</p></header>
+  {years.map(year => <section class="year-section"><h2 class="year-label">{year}</h2><PublicationList items={sortedPublications.filter(item => item.year === year)} /></section>)}
+  {years.length === 0 && <p>No publications listed yet.</p>}
+</Layout>
